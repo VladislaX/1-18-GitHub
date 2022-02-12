@@ -28,6 +28,7 @@ public class AddSigment : MonoBehaviour
             Player.SnakeHealthPoint = Player.SnakeHealthPoint + SigmentHealthPointValue;
             Player.Text.text = (Player.SnakeHealthPoint).ToString();
             Object.SetActive (false);
+            Player.AddBody();
         }
     }
 

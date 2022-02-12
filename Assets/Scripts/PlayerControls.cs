@@ -14,6 +14,8 @@ public class PlayerControls : MonoBehaviour
     public Game Game;
     internal int SnakeHealthPoint;
     public TextMeshPro Text;
+    private int BodyOffset;
+    public GameObject[] Body;
            
     
 
@@ -38,6 +40,8 @@ public class PlayerControls : MonoBehaviour
 
         _previousMousePosition = Input.mousePosition;
         SnakeRigidbody.velocity = Vector3.forward * SnakeSpeed;
+
+        Movement();
     }
     public void ReachFinish()
     {
@@ -55,5 +59,25 @@ public class PlayerControls : MonoBehaviour
     {
         SnakeRigidbody.velocity = Vector3.forward * SnakeSpeed;
     }
-   
+    public void AddBody()
+    {
+        if (SnakeHealthPoint > 1)
+        {
+            int BodyOffset = SnakeHealthPoint;
+            for (int i = 1; i < BodyOffset; i++) 
+            {
+                Body[i].SetActive(true);
+                Body[i].transform.position = SnakeRigidbody.transform.position + SigmentOffsetPosition(i);
+            }
+
+        }
+
+
+    }
+    private Vector3 SigmentOffsetPosition(int i)
+    {
+       return new Vector3 (0, 0, -i * 1.1f);
+    }
+
+
 }
