@@ -14,9 +14,8 @@ public class PlayerControls : MonoBehaviour
     public Game Game;
     internal int SnakeHealthPoint;
     public TextMeshPro Text;
-    private int BodyOffset;
+    internal int BodyOffset;
     public GameObject[] Body;
-           
     
 
     private void Awake()
@@ -35,12 +34,21 @@ public class PlayerControls : MonoBehaviour
             Vector3 delta = Input.mousePosition - _previousMousePosition;
             SnakeHead.Rotate (0, delta.x * MouseSensitivity, 0);
         }
-      
         
-
         _previousMousePosition = Input.mousePosition;
-        SnakeRigidbody.velocity = Vector3.forward * SnakeSpeed;
+        
+        if (SnakeHead.position.x <= -3.5f)
+        {
+            Vector3 LeftWall = new Vector3 (-3.5f, SnakeHead.transform.position.y, SnakeHead.transform.position.z);
+            SnakeHead.position = LeftWall;
+        }
+        if (SnakeHead.position.x >= 0.25f)
+        {
+            Vector3 RightWall = new Vector3(0.25f, SnakeHead.transform.position.y, SnakeHead.transform.position.z);
+            SnakeHead.position = RightWall;
+        }
 
+        
         Movement();
     }
     public void ReachFinish()
@@ -61,23 +69,48 @@ public class PlayerControls : MonoBehaviour
     }
     public void AddBody()
     {
-        if (SnakeHealthPoint > 1)
+        if (SnakeHealthPoint > 1 )
         {
             int BodyOffset = SnakeHealthPoint;
             for (int i = 1; i < BodyOffset; i++) 
             {
+                if (i >= 10)
+                {
+                    BodyOffset = 10;
+                }
                 Body[i].SetActive(true);
                 Body[i].transform.position = SnakeRigidbody.transform.position + SigmentOffsetPosition(i);
+                
+
             }
 
         }
 
-
     }
+    public void DestroyBody ()
+    {
+        if (SnakeHealthPoint < 10)
+        {
+            int BodyOffset = SnakeHealthPoint;
+            for (int i = BodyOffset; i > 0; i--)
+            {
+                
+                Body[BodyOffset].SetActive(false);
+                
+            } return;
+            
+        }
+        if (SnakeHealthPoint <= 1)
+        {
+            Body[1].SetActive(false);
+        }
+    }
+
     private Vector3 SigmentOffsetPosition(int i)
     {
        return new Vector3 (0, 0, -i * 1.1f);
     }
 
+   
 
 }

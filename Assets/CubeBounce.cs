@@ -29,6 +29,8 @@ public class CubeBounce : MonoBehaviour
             Player.SnakeHealthPoint -= 1;
             Text.text = (BlockHealthPointValue).ToString();
             Player.Text.text = (Player.SnakeHealthPoint).ToString();
+            Player.DestroyBody();
+            Player.SnakeRigidbody.GetComponent<ParticleSystem>().Emit (10);
             if (BlockHealthPointValue == 0)
             {
                 Object.SetActive(false);
@@ -38,7 +40,6 @@ public class CubeBounce : MonoBehaviour
                 Player.Die();
             }
         } 
-        
     }
 
 }
