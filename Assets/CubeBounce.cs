@@ -10,6 +10,7 @@ public class CubeBounce : MonoBehaviour
     public TextMeshPro Text;
     private int BlockHealthPointValue;
     public GameObject Object;
+    public Game Game;
 
     private void Awake()
     {
@@ -21,7 +22,7 @@ public class CubeBounce : MonoBehaviour
         Text.text = BlockHealthPointValue.ToString();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    internal void OnCollisionEnter(Collision collision)
     {
         if (!collision.collider.TryGetComponent(out PlayerControls _))
         {
@@ -31,6 +32,7 @@ public class CubeBounce : MonoBehaviour
             Player.Text.text = (Player.SnakeHealthPoint).ToString();
             Player.DestroyBody();
             Player.SnakeRigidbody.GetComponent<ParticleSystem>().Emit (10);
+            Game.ScoreCounting();
             if (BlockHealthPointValue == 0)
             {
                 Object.SetActive(false);
