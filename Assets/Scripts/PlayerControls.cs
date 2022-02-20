@@ -16,12 +16,24 @@ public class PlayerControls : MonoBehaviour
     public TextMeshPro Text;
     internal int BodyOffset;
     public GameObject[] Body;
-    
+
+
+    public AudioClip _blockCrushAudio;
+    private AudioSource _audioCrush;
+    [Min(0)]
+    public float CrushVolume;
+
+    public AudioClip _addSigmentSound;
+    private AudioSource _audioSigment;
+    [Min(0)]
+    public float AddSigmentVolume;
 
     private void Awake()
     {
         Movement();
         SnakeHealthPoint = 1;
+        _audioCrush = GetComponent<AudioSource>();
+        _audioSigment = GetComponent<AudioSource>();
     }
     private void Start()
     {
@@ -111,6 +123,15 @@ public class PlayerControls : MonoBehaviour
        return new Vector3 (0, 0, -i * 1.1f);
     }
 
-   
+    public void BlockCrushAudio()
+    {
 
+        _audioCrush.enabled = true;
+        _audioCrush.PlayOneShot(_blockCrushAudio, CrushVolume);
+    }
+    public void AddSigmentAudio()
+    {
+        _audioSigment.enabled = true;
+        _audioSigment.PlayOneShot(_addSigmentSound, AddSigmentVolume);
+    }
 }
