@@ -6,6 +6,12 @@ using UnityEngine.SceneManagement;
 public class Game : MonoBehaviour
 {
     public PlayerControls Controls;
+    public LoseFieldScoreScreen UILose;
+
+    private void Awake()
+    {
+        Score = 0;
+    }
     public enum State
     {
         Playing,
@@ -19,7 +25,9 @@ public class Game : MonoBehaviour
         CurrentState = State.Loss;
         Controls.enabled = false;
         Debug.Log("Game Over");
-        ReloadLevel();
+        UILose.LoseUI();
+        
+        
     }
 
     public void OnPlayerReackFinish()
@@ -29,9 +37,15 @@ public class Game : MonoBehaviour
         LevelIndex++;
         Controls.enabled = false;
         Debug.Log("You Won!");
-        ReloadLevel();
+        UILose.LoseUI();
+        UILose.FinishText.enabled = true;
+        
     }
-
+    public void ScoreCounting()
+    {
+        Score++;
+        
+    }
     public int LevelIndex
     {
         get => PlayerPrefs.GetInt(LevelIndexKey, 0);
@@ -42,13 +56,20 @@ public class Game : MonoBehaviour
         }
     }
     private const string LevelIndexKey = "LevelIndex";
-
-   
+    
+    public int Score
+    {
+        get => PlayerPrefs.GetInt(ScoreKey, 0);
+        private set
+        {
+            PlayerPrefs.SetInt(ScoreKey, value);
+        }
+    }
+    private const string ScoreKey = "Score";
 
     public void ReloadLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-
+        Score = 0;
     }
 }
