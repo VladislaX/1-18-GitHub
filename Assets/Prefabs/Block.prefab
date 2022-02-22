@@ -348,6 +348,7 @@ MonoBehaviour:
   Game: {fileID: 0}
   _bounceAudio: {fileID: 8300000, guid: 435b63b4e3cc9af4db5f194fb54e90c1, type: 3}
   BounceVolume: 1
+  BlockMaterial: {fileID: 2100000, guid: 69c05bdae778a674cad78531bc2d8aea, type: 2}
 --- !u!82 &6623201862755636481
 AudioSource:
   m_ObjectHideFlags: 0
