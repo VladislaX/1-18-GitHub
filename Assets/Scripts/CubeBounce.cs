@@ -18,14 +18,17 @@ public class CubeBounce : MonoBehaviour
     public float BounceVolume;
     
     
+    public Material BlockMaterial;
+  
     
+        
     
 
     private void Awake()
     {
         BlockHealthPointValue = Random.Range(1, 10);
         _audio = GetComponent<AudioSource>();
-        
+        BlockColored();
     }
     private void Start()
     {
@@ -60,5 +63,12 @@ public class CubeBounce : MonoBehaviour
     {
         _audio.PlayOneShot(_bounceAudio, BounceVolume);
     }
-   
+   public void BlockColored()
+    {
+
+        
+        BlockMaterial.SetFloat("Vector1_dca4bde6f4c740f9abdfe98741a7e6e6", BlockHealthPointValue);
+        
+       
+    }
 }
